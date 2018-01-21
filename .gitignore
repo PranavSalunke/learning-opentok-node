@@ -38,3 +38,6 @@ jspm_packages
 
 # dotenv
 .env
+
+#node stuff
+package-lock.json
