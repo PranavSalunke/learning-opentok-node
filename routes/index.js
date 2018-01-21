@@ -11,7 +11,7 @@ if (!apiKey || !secret) {
   console.error('');
   console.error('Missing TOKBOX_API_KEY or TOKBOX_SECRET');
   console.error('Find the appropriate values for these by logging into your TokBox Dashboard at: https://tokbox.com/account/#/');
-  console.error('Then add them to ', path.resolve('.env'), 'or as environment variables' );
+  console.error('Then add them to ', path.resolve('.env'), 'or as environment variables');
   console.error('');
   console.error('=========================================================================================================');
   process.exit();
@@ -26,15 +26,73 @@ var opentok = new OpenTok(apiKey, secret);
 // application you should consider a more persistent storage
 
 var roomToSessionIdDictionary = {};
+var classToSessionIdDictionary = {};
 
 // returns the room name, given a session ID that was associated with it
 function findRoomFromSessionId(sessionId) {
   return _.findKey(roomToSessionIdDictionary, function (value) { return value === sessionId; });
 }
 
+var ct = 0;
+
 router.get('/', function (req, res) {
-  res.render('index', { title: 'Learning-OpenTok-Node' });
+  ct++;
+  res.render('joinRoom', { title: ct });
 });
+
+// create a route that points to a classroom's view
+router.get('/classroom/:classname', function (req, res) {
+  var className = req.params.classname;
+  var sessionId;
+  var token;
+
+  // if the room name is associated with a session ID, fetch that
+  if (classToSessionIdDictionary[className]) {
+    console.log('classroom exists');
+    sessionId = classToSessionIdDictionary[className];
+
+    // generate token
+    token = opentok.generateToken(sessionId);
+    console.log('token set');
+
+    res.render('classroom', {
+      name: className,
+      sessionId: classToSessionIdDictionary[className],
+      token: token
+    });
+  }
+  // if this is the first time the room is being accessed, create a new session ID
+  else {
+    console.log('new classroom');
+    opentok.createSession({ mediaMode: 'routed' }, function (err, session) {
+      if (err) {
+        console.log(err);
+        res.status(500).send({ error: 'createSession error:' + err });
+        return;
+      }
+
+      // now that the room name has a session associated wit it, store it in memory
+      // IMPORTANT: Because this is stored in memory, restarting your server will reset these values
+      // if you want to store a room-to-session association in your production application
+      // you should use a more persistent storage for them
+      classToSessionIdDictionary[className] = session.sessionId;
+
+      // generate token
+      token = opentok.generateToken(session.sessionId);
+
+      console.log('token sending: ' + token);
+
+      res.render('classroom', {
+        name: className,
+        sessionId: classToSessionIdDictionary[className],
+        token: token
+      });
+
+    });
+  }
+
+});
+
 
 /**
  * GET /session redirects to /room/session
@@ -42,6 +100,7 @@ router.get('/', function (req, res) {
 router.get('/session', function (req, res) {
   res.redirect('/room/session');
 });
+
 
 /**
  * GET /room/:name
