@@ -20,6 +20,12 @@ if (!apiKey || !secret) {
 var OpenTok = require('opentok');
 var opentok = new OpenTok(apiKey, secret);
 
+// replace these values with those generated in your TokBox Account
+//var apiKey = "46043582";
+//var sessionId = "2_MX40NjA0MzU4Mn5-MTUxNjQ3OTM1OTgzOH4zKzFGQVFTa08xN0dKODU3OGFZNlIrWGl-fg";
+//var token = "T1==cGFydG5lcl9pZD00NjA0MzU4MiZzaWc9MDAzYjVjYmI1MDVjZmNkZjZlODc0NGM4YjQ5ODZmY2JjMTI3N2VmYTpzZXNzaW9uX2lkPTJfTVg0ME5qQTBNelU0TW41LU1UVXhOalEzT1RNMU9UZ3pPSDR6S3pGR1FWRlRhMDh4TjBkS09EVTNPR0ZaTmxJcldHbC1mZyZjcmVhdGVfdGltZT0xNTE2NDc5MzgwJm5vbmNlPTAuMzU5NjA0OTk4NTAxMTQyNyZyb2xlPW1vZGVyYXRvciZleHBpcmVfdGltZT0xNTE3MDg0MTgxJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
+
+
 // IMPORTANT: roomToSessionIdDictionary is a variable that associates room names with unique
 // unique sesssion IDs. However, since this is stored in memory, restarting your server will
 // reset these values if you want to have a room-to-session association in your production
@@ -27,17 +33,35 @@ var opentok = new OpenTok(apiKey, secret);
 
 var roomToSessionIdDictionary = {};
 var classToSessionIdDictionary = {};
+var liveVideos = [];
 
 // returns the room name, given a session ID that was associated with it
 function findRoomFromSessionId(sessionId) {
   return _.findKey(roomToSessionIdDictionary, function (value) { return value === sessionId; });
 }
 
-var ct = 0;
+var count = 0;
 
 router.get('/', function (req, res) {
-  ct++;
-  res.render('joinRoom', { title: ct });
+  res.render('joinRoom', {
+    title: 'ExplaNation',
+    liveList: liveVideos,
+  });
+});
+
+//create a random string for the class name
+router.get('/createname', function (req, res) {
+  var newstring = '/classroom/';
+
+  //create a random string
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 6; i++)
+    newstring += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  //newstring += "astring";
+
+  res.redirect(newstring);
+
 });
 
 // create a route that points to a classroom's view
@@ -78,9 +102,15 @@ router.get('/classroom/:classname', function (req, res) {
       classToSessionIdDictionary[className] = session.sessionId;
 
       // generate token
+      //token = opentok.generateToken({ role: 'moderator' }, session.sessionId);
       token = opentok.generateToken(session.sessionId);
 
       console.log('token sending: ' + token);
+
+      //push name onto livevideos list
+      liveVideos.push({ name: className, link: "/classroom/" + className });
+      console.log("videos: " + liveVideos);
+
 
       res.render('classroom', {
         name: className,

@@ -26,7 +26,7 @@
         <a href="#">Archives</a>
       </li>
       <li>
-        <a href="/classroom">Create Classroom</a>
+        <a href="/createname">Create Classroom</a>
         <!-- was teacher.html -->
       </li>
       <li>
@@ -41,13 +41,15 @@
     to learn interactively.
   </p>
 
+
+
+  <!--  
   <div id="toc">
     <p class="toc_title">Contents</p>
     <hr>
     <ul class="toc_list">
       <li>
         <a href="student.ejs"> First Point Header</a>
-        <!-- was student.html -->
       </li>
       <li>
         <a href="#Second_Header"> Second Point Header</a>
@@ -63,6 +65,28 @@
       </li>
     </ul>
   </div>
+-->
+
+
+  <div id="toc">
+    <p class="toc_title">Contents</p>
+    <hr>
+    <ul class="toc_list">
+
+
+      <% for(var i=0; i < liveList.length; i++) { %>
+        <li>
+          <a href=<%=liveList[i].link %> >
+            <%= liveList[i].name %>
+          </a>
+        </li>
+        <% } %>
+
+    </ul>
+  </div>
+
+
+
 </body>
 
 </html>
