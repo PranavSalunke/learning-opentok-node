@@ -1,55 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Learning OpenTok Node</title>
-  </head>
-  <style>
-    p, td {
-      font-family: Arial;
-    }
-    td:first-child {
-    font-family: Consolas, Courier, monospace;
-      padding-right: 20px
-    }
-    tr {
-      border: 1px solid black
-    }
-  </style>
-  <body>
-    <p>This is a sample web service for use with OpenTok. See the OpenTok <a href="https://github.com/opentok/learning-opentok-node">learning-opentok-node</a> repo on GitHub.</p>
-    <p>Resources are defined at the following endpoints:
-      <table>
-        <tr>
-          <td>GET /session</td>
-          <td>Return an OpenTok API key, session ID, and token.</td>
-        </tr>
-        <tr>
-          <td>GET /room/:name </td>
-          <td>Return an OpenTok API key, session ID, and token associated with a room name.</td>
-        </tr>
-        <tr>
-          <td>POST /archive/start</td>
-          <td>Start an archive for the specified OpenTok session.</td>
-        </tr>
-        <tr>
-          <td>POST /archive/:archiveId/stop</td>
-          <td>Stop the specified archive.</td>
-        </tr>
-        <tr>
-          <td>GET /archive/:archiveId/view</td>
-          <td>View the specified archive.</td>
-        </tr>
-        <tr>
-          <td>GET /archive/:archiveId</td>
-          <td>Return metadata for the specified archive.</td>
-        </tr>
-        <tr>
-          <td>GET /archive</td>
-          <td>Return a list of archives. <a href="https://tokbox.com/developer/sdks/node/reference/OpenTok.html#listArchives">More Information</a></td>
-          <td>Pagination is enabled by applying either count or offset parameteres.</td>
-        </tr>
-      </table>
-    </p>
-  </body>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ExplaNation</title>
+  <meta name="description" content="An interactive getting started guide for Brackets.">
+  <link rel="stylesheet" href="../public/stylesheets/home.css">
+</head>
+
+<body>
+
+  <h1>ExplaNation</h1>
+  <h2>Learn something live from anyone, anywhere! </h2>
+
+  <div id="table">
+    <ul>
+      <li>
+        <a href="index.ejs">Home</a>
+        <!-- was home.html -->
+      </li>
+      <li>
+        <a href="#">Archives</a>
+      </li>
+      <li>
+        <a href="teacher.ejs">Create Classroom</a>
+        <!-- was teacher.html -->
+      </li>
+      <li>
+        <a href="#">About Us</a>
+      </li>
+    </ul>
+  </div>
+
+  <p>
+    Welcome to ExplaNation! Here you can live stream videos from instructors in order to learn from the comfort of your very
+    own home! You can watch a live broadcast and ask questions in real time with our chat box or join a class with the instructor
+    to learn interactively.
+  </p>
+
+  <div id="toc">
+    <p class="toc_title">Contents</p>
+    <hr>
+    <ul class="toc_list">
+      <li>
+        <a href="student.ejs"> First Point Header</a>
+        <!-- was student.html -->
+      </li>
+      <li>
+        <a href="#Second_Header"> Second Point Header</a>
+      </li>
+      <li>
+        <a href="#First_Header"> First Point Header</a>
+      </li>
+      <li>
+        <a href="#Second_Header"> Second Point Header</a>
+      </li>
+      <li>
+        <a href="#First_Header"> First Point Header</a>
+      </li>
+    </ul>
+  </div>
+</body>
+
 </html>
