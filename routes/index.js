@@ -49,6 +49,10 @@ router.get('/', function (req, res) {
   });
 });
 
+router.get('/aboutus', function (req, res) {
+  res.render('aboutus');
+});
+
 //create a random string for the class name
 router.get('/createname', function (req, res) {
   var newstring = '/classroom/';
@@ -60,6 +64,7 @@ router.get('/createname', function (req, res) {
 
   //newstring += "astring";
 
+  //redirect to create classroom in form /classroom/:classname
   res.redirect(newstring);
 
 });
@@ -77,13 +82,19 @@ router.get('/classroom/:classname', function (req, res) {
 
     // generate token
     token = opentok.generateToken(sessionId);
-    console.log('token set');
+    console.log('id: ' + sessionId);
 
-    res.render('classroom', {
+    res.render('student', {
       name: className,
       sessionId: classToSessionIdDictionary[className],
       token: token
     });
+
+    //    res.render('classroom', {
+    //      name: className,
+    //      sessionId: classToSessionIdDictionary[className],
+    //      token: token
+    //    });
   }
   // if this is the first time the room is being accessed, create a new session ID
   else {
@@ -130,6 +141,8 @@ router.get('/classroom/:classname', function (req, res) {
 router.get('/session', function (req, res) {
   res.redirect('/room/session');
 });
+
+
 
 
 /**

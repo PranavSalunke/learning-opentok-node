@@ -4,9 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>
-    <%= title %>
-  </title>
+  <title>ExplaNation</title>
   <meta name="description" content="An interactive getting started guide for Brackets.">
   <link rel="stylesheet" href="/stylesheets/home.css">
 </head>
@@ -20,17 +18,12 @@
     <ul>
       <li>
         <a href="/">Home</a>
-        <!-- was home.html -->
-      </li>
-      <li>
-        <a href="#">Archives</a>
       </li>
       <li>
         <a href="/createname">Create Classroom</a>
-        <!-- was teacher.html -->
       </li>
       <li>
-        <a href="#">About Us</a>
+        <a href="/aboutus">About Us</a>
       </li>
     </ul>
   </div>
@@ -41,38 +34,10 @@
     to learn interactively.
   </p>
 
-
-
-  <!--  
   <div id="toc">
     <p class="toc_title">Contents</p>
     <hr>
     <ul class="toc_list">
-      <li>
-        <a href="student.ejs"> First Point Header</a>
-      </li>
-      <li>
-        <a href="#Second_Header"> Second Point Header</a>
-      </li>
-      <li>
-        <a href="#First_Header"> First Point Header</a>
-      </li>
-      <li>
-        <a href="#Second_Header"> Second Point Header</a>
-      </li>
-      <li>
-        <a href="#First_Header"> First Point Header</a>
-      </li>
-    </ul>
-  </div>
--->
-
-
-  <div id="toc">
-    <p class="toc_title">Contents</p>
-    <hr>
-    <ul class="toc_list">
-
 
       <% for(var i=0; i < liveList.length; i++) { %>
         <li>
@@ -84,7 +49,6 @@
 
     </ul>
   </div>
-
 
 
 </body>
